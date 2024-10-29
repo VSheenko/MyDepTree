@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <curl/curl.h>
 #include <string>
+#include "Indicators.h"
 
 size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
     return fwrite(ptr, size, nmemb, stream);
@@ -21,8 +22,29 @@ size_t header_callback(char* buffer, size_t size, size_t nitems, size_t* content
     return nitems * size;
 }
 
+int progress_callback(void* clientp,
+                      curl_off_t dltotal, // Общий размер файла для загрузки
+                      curl_off_t dlnow,   // Размер уже загруженных данных
+                      curl_off_t ultotal,
+                      curl_off_t ulnow) {
+    static double last_progress = 0.0;
+
+    Indicators* indicator = static_cast<Indicators*>(clientp);
+
+    if (dltotal <= 0)
+        return 0;
+
+    double progress = (static_cast<double>(dlnow) / dltotal);
+    if (progress != 1 && (progress - last_progress < BAR_UPDATE_THRESHOLD))
+        return 0;
+
+    indicator->Update(progress);
+    last_progress = progress;
+    return 0;
+}
+
 namespace InternetWorker {
-    int DownloadFile (const std::string& url, const std::string& outfile_path) {
+    int DownloadFile (const std::string& url, const std::string& outfile_path, bool progressbar_flag = true) {
         CURL *curl;
         FILE *fp;
 
@@ -35,8 +57,22 @@ namespace InternetWorker {
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
 
+        Indicators* indicator;
+        if (progressbar_flag) {
+            indicator = new Indicators(true);
+            curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, progress_callback);
+            curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
+            curl_easy_setopt(curl, CURLOPT_XFERINFODATA, indicator);
+        }
+
         CURLcode res = curl_easy_perform(curl);
         curl_easy_cleanup(curl);
+
+        if (indicator){
+            delete indicator;
+            indicator = nullptr;
+        }
+
         fclose(fp);
 
         if (res != CURLE_OK)
