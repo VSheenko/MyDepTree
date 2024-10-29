@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.29)
-project(MyUmlWorker)
+project(MyDepTree)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(MyUmlWorker main.cpp)
+
+find_package(CURL REQUIRED)
+
+add_executable(MyDepTree main.cpp
+        utils/InternetWorker.h)
+
+target_link_libraries(MyDepTree PRIVATE CURL::libcurl)
