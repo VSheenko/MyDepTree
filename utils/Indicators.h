@@ -7,26 +7,27 @@
 
 #include <iostream>
 #include <iomanip>
+#include <vector>
 #include <windows.h>
 
 #define BAR_LENGTH 20
-#define BAR_UPDATE_THRESHOLD 0.01
 
 class Indicators {
 private:
     COORD start_pos;
     bool is_progressbar;
+    static std::vector<std::string> units_speed_measurement;
 
 private:
     COORD GetCursorPosition();
     void SetCursorPosition(COORD pos);
-    void HideCursor();
-    void ShowCursor();
+    static void HideCursor();
+    static void ShowCursor();
 
 public:
     Indicators(bool is_progressbar);
     ~Indicators();
-    void Update(double progress);
+    void Update(double progress, double speed = -1);
 
 };
 
