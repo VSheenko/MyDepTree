@@ -7,7 +7,7 @@ set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 find_package(CURL REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
-
+find_package(libzippp CONFIG REQUIRED)
 
 
 add_executable(MyDepTree main.cpp
@@ -15,7 +15,10 @@ add_executable(MyDepTree main.cpp
         utils/Indicators.cpp
         utils/Indicators.h
         utils/JsonManager.cpp
-        utils/JsonManager.h)
+        utils/JsonManager.h
+        utils/ZipWorker.h
+        utils/AdditionalFileLoader.h)
 
 target_link_libraries(MyDepTree PRIVATE CURL::libcurl)
 target_link_libraries(MyDepTree PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(MyDepTree PRIVATE libzippp::libzippp)
