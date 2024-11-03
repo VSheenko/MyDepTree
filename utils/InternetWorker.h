@@ -69,7 +69,7 @@ int progress_callback(void* clientp,
     if (progress != 1 && duration_time.count() < 0.2)
         return 0;
 
-    double speed = ((loaded - last_load)/ duration_time.count());
+    double speed = ((loaded - last_load) / duration_time.count());
     speed = GetMovingAverage(speed_history, speed);
 
     if (progress != 1 && speed < 3) {
@@ -80,8 +80,6 @@ int progress_callback(void* clientp,
 
         return 0;
     }
-
-
 
     indicator->Update(progress, speed);
 
