@@ -17,6 +17,7 @@ private:
     PkgNode* root_pkg;
 public:
     std::string GetPlantUml();
+    bool GenerateGraphImage(std::string plantuml);
 
     explicit DepTree(const fs::path& root_pkg_path, int depth);
     ~DepTree();

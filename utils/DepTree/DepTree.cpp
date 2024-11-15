@@ -1,3 +1,4 @@
+#include <fstream>
 #include "DepTree.h"
 
 DepTree::DepTree(const fs::path &root_pkg_path, const int depth) {
@@ -28,3 +29,26 @@ std::string DepTree::GetPlantUml() {
     plantuml += "@enduml\n";
     return plantuml;
 }
+
+bool DepTree::GenerateGraphImage(std::string plantuml) {
+    time_t now_time = time(NULL);
+    std::tm* local_time = localtime(&now_time);
+
+    char buffer[80];
+    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d_%H-%M-%S", local_time);
+    std::string file_name = ".\\PlantUml\\" +  std::string(buffer) + ".plum";
+
+    std::ofstream temp_file(file_name);
+
+    if (!temp_file.is_open())
+        return false;
+
+    temp_file << plantuml;
+    temp_file.close();
+
+    std::string command = ".\\PlantUml\\start.bat " + file_name;
+    system(command.c_str());
+    fs::remove_all(file_name);
+    return true;
+}
+
