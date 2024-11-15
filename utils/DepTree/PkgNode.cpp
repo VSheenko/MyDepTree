@@ -124,3 +124,9 @@ std::string PkgNode::GetPkgName() {
     std::string res = this->pkg_path.filename().string();
     return res.substr(0, res.find('-'));
 }
+
+PkgNode::~PkgNode() {
+    for (auto& dep : this->dependencies) {
+        delete dep;
+    }
+}

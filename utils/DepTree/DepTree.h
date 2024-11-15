@@ -3,7 +3,9 @@
 
 #include <string>
 #include <filesystem>
+#include <queue>
 #include "PkgNode.h"
+
 
 namespace fs = std::filesystem;
 
@@ -14,6 +16,8 @@ public:
 private:
     PkgNode* root_pkg;
 public:
+    std::string GetPlantUml();
+
     explicit DepTree(const fs::path& root_pkg_path, int depth);
     ~DepTree();
 

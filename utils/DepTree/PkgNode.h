@@ -42,6 +42,7 @@ public:
     std::set<PkgNode*, PkgNodeCompare> dependencies;
 
     PkgNode() = default;
+    ~PkgNode();
     static PkgNode* CreatePkgNode(const fs::path& pkg_path, int depth = 0);
     void GetDependencies(int depth);
 };
