@@ -36,6 +36,12 @@ void Indicators::Update(double progress, double speed) {
         return;
     }
 
+    if (!is_progressbar) {
+        std::cout << "Loading" << std::left << std::setw(3) << std::string((int)progress, '.');
+        SetCursorPosition(cur_pos);
+        return;
+    }
+
     std::cout << "|" << std::setw(BAR_LENGTH) <<  std::string((int)(progress / (1.0 / BAR_LENGTH)), '#') << "|" <<
               std::right << std::setw(7) << std::setprecision(2) << std::fixed << progress * 100 << "%" << std::left;
 
@@ -57,6 +63,11 @@ void Indicators::Update(double progress, double speed) {
 }
 
 Indicators::~Indicators() {
+    if (!is_progressbar) {
+        SetCursorPosition(start_pos);
+        std::cout << std::setw(25) << "Complete";
+    }
+
     SetCursorPosition({0, (short)(start_pos.Y + 1)});
     ShowCursor();
 }

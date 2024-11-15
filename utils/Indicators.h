@@ -3,7 +3,7 @@
 
 // |########            | 40.00% для загрузки файлов или того, что можно процентно измерить
 // или
-// |   #####            |
+// Loading...
 
 #include <iostream>
 #include <iomanip>
@@ -25,7 +25,7 @@ private:
     static void ShowCursor();
 
 public:
-    Indicators(bool is_progressbar);
+    explicit Indicators(bool is_progressbar);
     ~Indicators();
     void Update(double progress, double speed = -1);
 
