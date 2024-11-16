@@ -3,8 +3,6 @@ project(MyDepTree)
 
 set(CMAKE_CXX_STANDARD 23)
 
-set(CMAKE_EXE_LINKER_FLAGS "-static")
-
 find_package(CURL REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(libzippp CONFIG REQUIRED)
@@ -18,12 +16,10 @@ add_executable(MyDepTree main.cpp
         utils/JsonManager.h
         utils/ZipWorker.h
         utils/AdditionalFileLoader.h
-#        utils/DepTree/DepTree.cpp
-#        utils/DepTree/DepTree.h
-        utils/DepTree/PkgNode.cpp
-        utils/DepTree/PkgNode.h
-        utils/DepTree/DepTree.h
-        utils/DepTree/DepTree.cpp)
+        DepTree/PkgNode.cpp
+        DepTree/PkgNode.h
+        DepTree/DepTree.h
+        DepTree/DepTree.cpp)
 
 target_link_libraries(MyDepTree PRIVATE CURL::libcurl)
 target_link_libraries(MyDepTree PRIVATE nlohmann_json::nlohmann_json)

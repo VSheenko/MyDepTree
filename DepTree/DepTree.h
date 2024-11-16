@@ -4,8 +4,9 @@
 #include <string>
 #include <filesystem>
 #include <queue>
+#include <fstream>
+#include <windows.h>
 #include "PkgNode.h"
-
 
 namespace fs = std::filesystem;
 
