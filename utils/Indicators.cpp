@@ -63,12 +63,13 @@ void Indicators::Update(double progress, double speed) {
 }
 
 Indicators::~Indicators() {
+    short y = GetCursorPosition().Y;
     if (!is_progressbar) {
         SetCursorPosition(start_pos);
         std::cout << std::setw(25) << "Complete";
     }
 
-    SetCursorPosition({0, (short)(start_pos.Y + 1)});
+    SetCursorPosition({0, (short)(y + 1)});
     ShowCursor();
 }
 

@@ -11,6 +11,11 @@ void GenerateGraph(DepTree* tree) {
 }
 
 int main(int argc, char* argv[]) {
+    if (!SetDllDirectory(".\\dlls")) {
+        std::cerr << "Error: Failed to set dll directory" << '\n';
+        return 1;
+    }
+
     if (argc != 3) {
         std::cerr << "Error: Invalid number of arguments" << '\n';
         return 1;
@@ -41,6 +46,9 @@ int main(int argc, char* argv[]) {
 
     short code = 0;
     CheckNecessaryFiles(code);
+
+    if (code != 0)
+        return 1;
 
     DepTree* tree = new DepTree(argv[1], std::stoi(argv[2]) - 1);
 

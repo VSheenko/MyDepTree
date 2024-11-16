@@ -123,8 +123,10 @@ namespace InternetWorker {
 
         ofs.close();
 
-        if (res != CURLE_OK)
+        if (res != CURLE_OK) {
+            fs::remove_all(outfile_path);
             return -1;
+        }
 
         return 0;
     }

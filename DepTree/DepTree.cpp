@@ -48,6 +48,8 @@ bool DepTree::GenerateGraphImage(std::string plantuml) {
     std::string command = ".\\PlantUml\\start.bat " + file_name;
     system(command.c_str());
     fs::remove_all(file_name);
+
+    std::cout << "\nPlantUml file: " << plantuml << std::endl;
     ShellExecute(NULL, "open", (".\\PlantUml\\" +  std::string(buffer) + ".png").c_str(), NULL, NULL, SW_SHOWNORMAL);
     return true;
 }
