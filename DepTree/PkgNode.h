@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <regex>
 #include <set>
+#include <cctype>
 
 namespace fs = std::filesystem;
 

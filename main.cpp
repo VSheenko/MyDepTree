@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    if (depth == 0) {
+    if (depth < 0) {
         std::cerr << "Error: Invalid depth" << '\n';
         return 1;
     }
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
     if (code != 0)
         return 1;
 
-    DepTree* tree = new DepTree(argv[1], std::stoi(argv[2]) - 1);
+    DepTree* tree = new DepTree(argv[1], std::stoi(argv[2]));
 
     Indicators* indicators = new Indicators(false);
     std::thread t(GenerateGraph, tree);

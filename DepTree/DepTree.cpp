@@ -1,8 +1,7 @@
 #include "DepTree.h"
 
 DepTree::DepTree(const fs::path &root_pkg_path, const int depth) {
-    root_pkg = PkgNode::CreatePkgNode(root_pkg_path);
-    root_pkg->GetDependencies(depth);
+    root_pkg = PkgNode::CreatePkgNode(root_pkg_path, depth);
 }
 
 DepTree::~DepTree() {
@@ -24,6 +23,9 @@ std::string DepTree::GetPlantUml() {
             q.push(dep);
         }
     }
+
+    if (root_pkg->dependencies.empty())
+        plantuml += "[" + root_pkg->pkg_name + "; " + root_pkg->version + "]" + '\n';
 
     plantuml += "@enduml\n";
     return plantuml;
