@@ -87,11 +87,11 @@ MyDepTree <pkg_dir> <dep>
 
 
 Вывод приложения:
-
+![doc/img/s1](https://github.com/VSheenko/MyDepTree/blob/master/doc/img/s1.png)
 Изображение дерева:
-
+![doc/img/s2](https://github.com/VSheenko/MyDepTree/blob/master/doc/img/s2.png)
 # Тесты
-
+![doc/img/s3](https://github.com/VSheenko/MyDepTree/blob/master/doc/img/s3.png)
 
 
 
